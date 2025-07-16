@@ -5,6 +5,7 @@
 # ==================================================================
 
 x-shared-env: &shared-api-worker-env
+  INTERNAL_AUTH_SECRET: ${INTERNAL_AUTH_SECRET:-}
   CONSOLE_API_URL: ${CONSOLE_API_URL:-}
   CONSOLE_WEB_URL: ${CONSOLE_WEB_URL:-}
   SERVICE_API_URL: ${SERVICE_API_URL:-}
@@ -506,8 +507,6 @@ x-shared-env: &shared-api-worker-env
   PLUGIN_VOLCENGINE_TOS_SECRET_KEY: ${PLUGIN_VOLCENGINE_TOS_SECRET_KEY:-}
   PLUGIN_VOLCENGINE_TOS_REGION: ${PLUGIN_VOLCENGINE_TOS_REGION:-}
   ENABLE_OTEL: ${ENABLE_OTEL:-false}
-  OTLP_TRACE_ENDPOINT: ${OTLP_TRACE_ENDPOINT:-}
-  OTLP_METRIC_ENDPOINT: ${OTLP_METRIC_ENDPOINT:-}
   OTLP_BASE_ENDPOINT: ${OTLP_BASE_ENDPOINT:-http://localhost:4318}
   OTLP_API_KEY: ${OTLP_API_KEY:-}
   OTEL_EXPORTER_OTLP_PROTOCOL: ${OTEL_EXPORTER_OTLP_PROTOCOL:-}
@@ -527,7 +526,8 @@ x-shared-env: &shared-api-worker-env
 services:
   # API service
   api:
-    image: langgenius/dify-api:1.6.0
+    image: dify-api-cust
+    # image: langgenius/dify-api:1.6.0
     restart: always
     environment:
       # Use the shared environment variables.
@@ -556,7 +556,8 @@ services:
   # worker service
   # The Celery worker for processing the queue.
   worker:
-    image: langgenius/dify-api:1.6.0
+    image: dify-api-cust
+    # image: langgenius/dify-api:1.6.0
     restart: always
     environment:
       # Use the shared environment variables.
@@ -582,7 +583,8 @@ services:
 
   # Frontend web application.
   web:
-    image: langgenius/dify-web:1.6.0
+    image: dify-web-cust
+    # image: langgenius/dify-web:1.6.0
     restart: always
     environment:
       CONSOLE_API_URL: ${CONSOLE_API_URL:-}

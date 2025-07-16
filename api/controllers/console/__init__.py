@@ -182,3 +182,6 @@ from .workspace import (
     tool_providers,
     workspace,
 )
+
+from .auth import external_auth
+api.add_resource(external_auth.ExternalAuthLoginApi, "/external-auth/login")
